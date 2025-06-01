@@ -18,6 +18,13 @@ public class CarPlacementController : MonoBehaviour
 
     void Update()
     {
+#if UNITY_EDITOR
+        if (spawnedCar == null && Input.GetMouseButtonDown(0))
+        {
+            Vector3 spawnPos = Camera.main.transform.position + Camera.main.transform.forward * 1.5f;
+            spawnedCar = Instantiate(carPrefab, spawnPos, Quaternion.identity);
+        }
+#else
         if (Input.touchCount == 0 || spawnedCar != null)
             return;
 
@@ -30,5 +37,6 @@ public class CarPlacementController : MonoBehaviour
                 spawnedCar = Instantiate(carPrefab, hitPose.position, hitPose.rotation);
             }
         }
+#endif
     }
 }
