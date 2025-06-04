@@ -18,12 +18,12 @@ public class CarController : MonoBehaviour
         if (engineAudio && !engineAudio.isPlaying)
             engineAudio.Play();
 
-        // ✅ Spin back wheels for 10 seconds
+        
         foreach (WheelRotator wheel in GetComponentsInChildren<WheelRotator>())
         {
-            wheel.StartSpinning(10f); // spins for 10 seconds
+            wheel.StartSpinning(10f);
         }
-    }
+    } 
 
     public void ChangeColor()
     {

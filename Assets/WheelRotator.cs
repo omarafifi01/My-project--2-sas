@@ -1,40 +1,26 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WheelRotator : MonoBehaviour
 {
-    public float spinSpeed = 360f; // Degrees per second
+    public float rotationSpeed = 200f;
     private bool isSpinning = false;
-    private float spinTimer = 0f;
+    private float spinDuration = 0f;
 
-    public enum SpinAxis { X, Y, Z }
-    public SpinAxis spinAxis = SpinAxis.X;
-
-    public void StartSpinning(float duration = 10f)
+    public void StartSpinning(float duration)
     {
-        Debug.Log($"{gameObject.name} starts spinning for {duration} seconds");
         isSpinning = true;
-        spinTimer = duration;
+        spinDuration = duration;
     }
 
     void Update()
     {
-        if (!isSpinning) return;
-
-        Vector3 axis = spinAxis switch
+        if (isSpinning)
         {
-            SpinAxis.X => Vector3.right,
-            SpinAxis.Y => Vector3.up,
-            SpinAxis.Z => Vector3.forward,
-            _ => Vector3.right
-        };
+            transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime);
+            spinDuration -= Time.deltaTime;
 
-        transform.Rotate(axis * spinSpeed * Time.deltaTime);
-
-        spinTimer -= Time.deltaTime;
-        if (spinTimer <= 0f)
-        {
-            isSpinning = false;
-            Debug.Log($"{gameObject.name} stopped spinning");
+            if (spinDuration <= 0f)
+                isSpinning = false;
         }
     }
 }
